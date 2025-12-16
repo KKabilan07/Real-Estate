@@ -22,9 +22,9 @@ const Navbar = () => {
         <img src={assets.logo} alt="Logo" className='h-8' />
         <ul className='hidden md:flex gap-8 text-white '>
           <li><a href="#Header" className='cursor-pointer hover:text-gray-400'>Home</a></li>
-          <li><a href="#Header" className='cursor-pointer hover:text-gray-400'>About</a></li>
-          <li><a href="#Header" className='cursor-pointer hover:text-gray-400'>Projects</a></li>
-          <li><a href="#Header" className='cursor-pointer hover:text-gray-400'>Testimonials</a></li>
+          <li><a href="#About" className='cursor-pointer hover:text-gray-400'>About</a></li>
+          <li><a href="#Projects" className='cursor-pointer hover:text-gray-400'>Projects</a></li>
+          <li><a href="#Testimonials" className='cursor-pointer hover:text-gray-400'>Testimonials</a></li>
         </ul>
         <button className='cursor-pointer hidden md:block bg-white px-8 py-2 rounded-full border border-gray-300'>Sign up</button>
         <img src={assets.menu_icon} className='md:hidden w-7 cursor-pointer' onClick={() => setShowMobileMenu(true)}></img>
