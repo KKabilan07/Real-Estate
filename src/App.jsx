@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from './Components/Header'
 import About from './Components/About'
+import Projects from './Components/Projects'
 
 
 const App = () => {
@@ -8,6 +9,7 @@ const App = () => {
     <div className='w-full overflow-hidden'>
       <Header/>
       <About/>
+      <Projects/>
     </div>
   )
 }
