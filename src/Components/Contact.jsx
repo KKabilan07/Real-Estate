@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { toast } from 'react-toastify';
 
 
 const Contact = () => {
@@ -21,9 +22,13 @@ const Contact = () => {
             });
 
             const data = await response.json();
+            if(data.success){
+                toast.success("Forms Submitted Successfully");
+                event.target.reset();
+            }else{
+                toast.error(data.message);
+            }
             setResult(data.success ? "Success!" : "Error");
-
-
 
             setTimeout(() => {
                 setResult("");
@@ -63,7 +68,9 @@ const Contact = () => {
                 Message 
                 <textarea className='w-full border border-gray-300 rounded py-3 px-4 mt-2 h-48 resize-none' name="Message" placeholder='Message' required></textarea>
             </div>
-            <button type='submit' className='bg-blue-600 text-white py-2 px-12 mb-10 rounded'> {result ? result : "Send Message"}</button>
+            <button type="submit" className="bg-blue-500 text-white py-2 px-12 mb-10 rounded cursor-pointer hover:bg-blue-700">
+            Send Message
+            </button>
         </form>
     </div>
   )

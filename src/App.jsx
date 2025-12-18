@@ -5,6 +5,8 @@ import Projects from './Components/Projects'
 import Testimonials from './Components/Testimonials'
 import Contact from './Components/Contact'
 
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -14,6 +16,7 @@ const App = () => {
       <Projects/>
       <Testimonials/>
       <Contact/>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   )
 }
