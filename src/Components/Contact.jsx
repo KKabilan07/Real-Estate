@@ -12,7 +12,7 @@ const Contact = () => {
             const formData = new FormData(event.target);
             formData.append(
             "access_key",
-            import.meta.env.VITE_WEB3FORMS_KEY
+            "adc01eb0-0ea2-493e-a440-1b1bdb9629d9"
             );
 
 
