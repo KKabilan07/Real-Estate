@@ -1,47 +1,7 @@
-import React, { useState } from "react";
-import { toast } from "react-toastify";
+import React from "react";
 import { motion } from "framer-motion";
 
 const Contact = () => {
-  const [loading, setLoading] = useState(false);
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-
-    const formData = new FormData(event.target);
-
-    // Your NEW Web3Forms access key
-    formData.append(
-      "access_key",
-      "bd677875-2da7-4c5c-99ca-b3cb73cbdd41"
-    );
-
-    try {
-      const response = await fetch(
-        "https://api.web3forms.com/submit",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-        toast.success("Form Submitted Successfully ✅");
-        event.target.reset();
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error("Something went wrong. Try again!");
-      console.error(error);
-    }
-
-    setLoading(false);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, x: -200 }}
@@ -63,11 +23,15 @@ const Contact = () => {
       </p>
 
       <form
-        onSubmit={onSubmit}
         method="POST"
         action="https://api.web3forms.com/submit"
         className="max-w-2xl mx-auto text-gray-600 pt-8"
       >
+        <input
+          type="hidden"
+          name="access_key"
+          value="bd677875-2da7-4c5c-99ca-b3cb73cbdd41"
+        />
         {/* Hidden subject field */}
         <input
           type="hidden"
@@ -111,10 +75,9 @@ const Contact = () => {
 
         <button
           type="submit"
-          disabled={loading}
-          className="bg-blue-500 text-white py-2 px-12 mb-10 rounded cursor-pointer hover:bg-blue-700 disabled:opacity-50"
+          className="bg-blue-500 text-white py-2 px-12 mb-10 rounded cursor-pointer hover:bg-blue-700"
         >
-          {loading ? "Sending..." : "Send Message"}
+          Send Message
         </button>
       </form>
     </motion.div>
