@@ -64,6 +64,7 @@ const Contact = () => {
 
       <form
         onSubmit={onSubmit}
+        method="POST"
         className="max-w-2xl mx-auto text-gray-600 pt-8"
       >
         {/* Hidden subject field */}
