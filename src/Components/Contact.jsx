@@ -25,15 +25,16 @@ const Contact = () => {
       if (data.success) {
         toast.success("Form Submitted Successfully ✅");
         event.target.reset();
+        setLoading(false);
       } else {
         toast.error(data.message || "Failed to submit form");
+        setLoading(false);
       }
     } catch (error) {
       toast.error("Something went wrong. Try again!");
-      console.error(error);
+      console.error("Error:", error);
+      setLoading(false);
     }
-
-    setLoading(false);
   };
   return (
     <motion.div
@@ -66,8 +67,8 @@ const Contact = () => {
         />
         <input
           type="hidden"
-          name="redirect"
-          value="false"
+          name="from_name"
+          value="Real Estate Contact Form"
         />
         {/* Hidden subject field */}
         <input
