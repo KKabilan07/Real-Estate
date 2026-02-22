@@ -16,8 +16,7 @@ export default defineConfig({
         }
       }
     },
-    assetsInlineLimit: 4096,
-    minify: 'terser'
+    assetsInlineLimit: 4096
   },
   assetsInclude: ['**/*.png', '**/*.jpg', '**/*.svg']
 })
