@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
+
+// Initialize EmailJS with your public key
+emailjs.init("N5tA_7zAImDYo5sbX");
 
 const Contact = () => {
   const [loading, setLoading] = useState(false);
@@ -9,30 +13,28 @@ const Contact = () => {
     event.preventDefault();
     setLoading(true);
 
-    const form = event.target;
+    const formData = {
+      to_email: "kkabilan2024@gmail.com", 
+      from_name: event.target.name.value,
+      from_email: event.target.email.value,
+      message: event.target.message.value,
+    };
 
-    // Create or get hidden iframe
-    let iframe = document.getElementById("web3-form-iframe");
-    if (!iframe) {
-      iframe = document.createElement("iframe");
-      iframe.id = "web3-form-iframe";
-      iframe.style.display = "none";
-      document.body.appendChild(iframe);
+    try {
+      await emailjs.send(
+        "service_lp3dtnw",
+        "template_w82hxfd", 
+        formData
+      );
+
+      toast.success("Form Submitted Successfully");
+      event.target.reset();
+    } catch (error) {
+      toast.error("Failed to send message. Please try again!");
+      console.error("EmailJS Error:", error);
     }
 
-    // Set form target to iframe and submit
-    form.target = "web3-form-iframe";
-    form.action = "https://api.web3forms.com/submit";
-    form.method = "POST";
-    form.submit();
-
-    // Show success message and reset form
-    setTimeout(() => {
-      toast.success("Form Submitted Successfully ✅");
-      form.reset();
-      form.target = "";
-      setLoading(false);
-    }, 500);
+    setLoading(false);
   };
   return (
     <motion.div
@@ -58,23 +60,6 @@ const Contact = () => {
         onSubmit={onSubmit}
         className="max-w-2xl mx-auto text-gray-600 pt-8"
       >
-        <input
-          type="hidden"
-          name="access_key"
-          value="bd677875-2da7-4c5c-99ca-b3cb73cbdd41"
-        />
-        <input
-          type="hidden"
-          name="from_name"
-          value="Real Estate Contact Form"
-        />
-        {/* Hidden subject field */}
-        <input
-          type="hidden"
-          name="subject"
-          value="New Contact Form Submission"
-        />
-
         <div className="flex flex-wrap -mx-2">
           <div className="w-full md:w-1/2 px-2 text-left">
             <label>Your Name</label>
