@@ -11,30 +11,43 @@ const Contact = () => {
 
     const formData = new FormData(event.target);
 
+    // Convert FormData to object for Web3Forms
+    const data = {
+      access_key: "bd677875-2da7-4c5c-99ca-b3cb73cbdd41",
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+      subject: "New Contact Form Submission",
+      from_name: "Real Estate Contact Form",
+    };
+
     try {
       const response = await fetch(
         "https://api.web3forms.com/submit",
         {
           method: "POST",
-          body: formData,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(data),
         }
       );
 
-      const data = await response.json();
+      const result = await response.json();
 
-      if (data.success) {
+      if (result.success) {
         toast.success("Form Submitted Successfully ✅");
         event.target.reset();
-        setLoading(false);
       } else {
-        toast.error(data.message || "Failed to submit form");
-        setLoading(false);
+        toast.error(result.message || "Failed to submit form");
       }
     } catch (error) {
       toast.error("Something went wrong. Try again!");
       console.error("Error:", error);
-      setLoading(false);
     }
+
+    setLoading(false);
   };
   return (
     <motion.div
