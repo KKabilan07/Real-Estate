@@ -8,31 +8,22 @@ const Header = () => {
   const headerRef = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setImageLoaded(true);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    if (headerRef.current) {
-      observer.observe(headerRef.current);
-    }
-
-    return () => {
-      if (headerRef.current) {
-        observer.unobserve(headerRef.current);
-      }
-    };
+    // Preload image immediately
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.onerror = () => setImageLoaded(true);
+    img.src = headerImg;
   }, []);
 
   return (
     <div 
       ref={headerRef}
-      className='min-h-screen mb-4 bg-cover bg-center flex items-center w-full overflow-hidden transition-all duration-500' 
-      style={{backgroundImage: imageLoaded ? `url(${headerImg})` : 'none'}} 
+      className='min-h-screen mb-4 bg-cover bg-center flex items-center w-full overflow-hidden transition-opacity duration-700' 
+      style={{
+        backgroundImage: imageLoaded ? `url(${headerImg})` : 'none',
+        backgroundColor: '#f3f4f6',
+        opacity: imageLoaded ? 1 : 0.8
+      }} 
       id='Header'
     >
         <Navbar/>
