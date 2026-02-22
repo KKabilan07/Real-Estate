@@ -9,45 +9,30 @@ const Contact = () => {
     event.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(event.target);
+    const form = event.target;
 
-    // Convert FormData to object for Web3Forms
-    const data = {
-      access_key: "bd677875-2da7-4c5c-99ca-b3cb73cbdd41",
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message"),
-      subject: "New Contact Form Submission",
-      from_name: "Real Estate Contact Form",
-    };
-
-    try {
-      const response = await fetch(
-        "https://api.web3forms.com/submit",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      const result = await response.json();
-
-      if (result.success) {
-        toast.success("Form Submitted Successfully ✅");
-        event.target.reset();
-      } else {
-        toast.error(result.message || "Failed to submit form");
-      }
-    } catch (error) {
-      toast.error("Something went wrong. Try again!");
-      console.error("Error:", error);
+    // Create or get hidden iframe
+    let iframe = document.getElementById("web3-form-iframe");
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.id = "web3-form-iframe";
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
     }
 
-    setLoading(false);
+    // Set form target to iframe and submit
+    form.target = "web3-form-iframe";
+    form.action = "https://api.web3forms.com/submit";
+    form.method = "POST";
+    form.submit();
+
+    // Show success message and reset form
+    setTimeout(() => {
+      toast.success("Form Submitted Successfully ✅");
+      form.reset();
+      form.target = "";
+      setLoading(false);
+    }, 500);
   };
   return (
     <motion.div
