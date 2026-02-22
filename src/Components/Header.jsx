@@ -1,10 +1,40 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Navbar from './Navbar'
 import { motion } from "framer-motion";
+import headerImg from '../assets/header_img.png'
  
 const Header = () => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setImageLoaded(true);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    if (headerRef.current) {
+      observer.observe(headerRef.current);
+    }
+
+    return () => {
+      if (headerRef.current) {
+        observer.unobserve(headerRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <div className='min-h-screen mb-4 bg-cover bg-center flex items-center w-full overflow-hidden' style={{backgroundImage: "url('/header_img.png')"}} id='Header'>
+    <div 
+      ref={headerRef}
+      className='min-h-screen mb-4 bg-cover bg-center flex items-center w-full overflow-hidden transition-all duration-500' 
+      style={{backgroundImage: imageLoaded ? `url(${headerImg})` : 'none'}} 
+      id='Header'
+    >
         <Navbar/>
         <motion.div 
         initial={{opacity:0, y:100}}

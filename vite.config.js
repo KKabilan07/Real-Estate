@@ -7,5 +7,17 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: process.env.VITE_BASE_PATH || "/Real-Estate"
+  base: process.env.VITE_BASE_PATH || "/Real-Estate",
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'framer-motion']
+        }
+      }
+    },
+    assetsInlineLimit: 4096,
+    minify: 'terser'
+  },
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.svg']
 })
